@@ -3,6 +3,69 @@
 #include <chrono>
 
 /**
+*	@brief	Process static command
+*	@return true - change type of command
+* 
+*/
+bool StaticCommand::ProcessCommand(const std::string& cmd)
+{
+	if (cmd != EndOfFileString)
+	{
+		if (cmd == "{")
+		{
+			PrintPool();
+			return true;
+		}
+
+		PushPool(cmd);
+
+		if (GetPoolSize() == count_)
+		{
+			PrintPool();
+		}
+	}
+	else
+	{
+		PrintPool();
+	}
+
+	return false;
+}
+
+/**
+*	@brief	Process dynamic command
+*	@return true - change type of command
+*
+*/
+bool DynamicCommand::ProcessCommand(const std::string& cmd)
+{
+	if (cmd == EndOfFileString)
+		return false;
+
+	if (cmd == "{")
+	{
+		++openBraceCount_;
+	}
+	else
+		if (cmd == "}")
+		{
+			if (openBraceCount_ == 0)
+			{
+				PrintPool();
+				return true;
+			}
+
+			--openBraceCount_;
+		}
+		else
+		{
+			PushPool(cmd);
+		}
+
+	return false;
+}
+
+/**
 *	Process command int the static mode
 */
 ICommandHandlerPtr StaticCommandHandler::ProcessCommand(Command* cmd, const std::string& s, bool& exit)

@@ -53,7 +53,8 @@ public:
 
 	void PrintString(const std::string& s) const;
 
-	bool ProcessCommand(const std::string& cmd) 
+	virtual bool ProcessCommand(const std::string& cmd) = 0;
+	/*
 	{
 		bool res;
 
@@ -66,14 +67,45 @@ public:
 
 		return !res;
 	}
-
-private:
+*/
+protected:
 
 	const size_t count_;
+
+private:
+	
 	long long firstCmdTime_ = 0;
 	ICommandHandlerPtr handler_;
 	std::vector<std::string> pool_;
 	std::vector<IWriterPtr> writersPool_;
+};
+
+/**
+*	Static command
+*/
+class StaticCommand : public Command
+{
+public:
+
+	explicit StaticCommand(size_t count) : Command(count) {}
+
+	bool ProcessCommand(const std::string& cmd) override;
+};
+
+/**
+*	DynamicCommand command
+*/
+class DynamicCommand : public Command
+{
+public:
+
+	DynamicCommand() : Command(0) {}
+
+	bool ProcessCommand(const std::string& cmd) override;
+
+private:
+
+	size_t openBraceCount_ = 0;
 };
 
 /**

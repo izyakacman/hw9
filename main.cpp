@@ -6,15 +6,29 @@
 
 using namespace std;
 
-int main(int argn, char** argc)
+int main(int argc, char* argv[])
 {
-	if (argn != 3)
+	if (argc != 3)
 	{
 		cout << "Usage: bulk_server <port> <commands count>";
 		return -1;
 	}
 
-	Command cmd{ static_cast<size_t>(atoll(argc[2])) };
+	try
+	{
+		StaticCommand static_cmd{ static_cast<size_t>(atoll(argv[2])) };
 
-	Server( static_cast<uint16_t>(stoi(argc[1])), cmd );
+		boost::asio::io_context io_context;
+
+		TcpServer server(io_context, static_cast<uint16_t>(stoi(argv[1])), static_cmd);
+
+		io_context.run();
+
+	}
+	catch (const std::exception& ex)
+	{
+		std::cerr << "Exception: " << ex.what() << "\n";
+	}
+
+	//Server( static_cast<uint16_t>(stoi(argc[1])), cmd );
 }
