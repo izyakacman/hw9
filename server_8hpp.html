@@ -62,27 +62,29 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle">
 <div class="title">server.hpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;boost/asio.hpp&gt;</code><br />
 <code>#include &quot;<a class="el" href="command_8h_source.html">command.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for server.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="server_8hpp__incl.png" border="0" usemap="#aserver_8hpp" alt=""/></div>
 <map name="aserver_8hpp" id="aserver_8hpp">
-<area shape="rect" title=" " alt="" coords="113,5,196,32"/>
-<area shape="rect" title=" " alt="" coords="72,80,136,107"/>
-<area shape="rect" href="command_8h.html" title=" " alt="" coords="161,80,250,107"/>
-<area shape="rect" title=" " alt="" coords="5,229,77,256"/>
-<area shape="rect" title=" " alt="" coords="243,229,298,256"/>
-<area shape="rect" title=" " alt="" coords="132,155,191,181"/>
-<area shape="rect" title=" " alt="" coords="215,155,283,181"/>
-<area shape="rect" title=" " alt="" coords="308,155,375,181"/>
-<area shape="rect" href="writer_8h.html" title=" " alt="" coords="44,155,108,181"/>
+<area shape="rect" title=" " alt="" coords="105,5,188,32"/>
+<area shape="rect" title=" " alt="" coords="5,80,69,107"/>
+<area shape="rect" title=" " alt="" coords="93,80,200,107"/>
+<area shape="rect" href="command_8h.html" title=" " alt="" coords="225,80,314,107"/>
+<area shape="rect" title=" " alt="" coords="69,229,141,256"/>
+<area shape="rect" title=" " alt="" coords="307,229,362,256"/>
+<area shape="rect" title=" " alt="" coords="196,155,255,181"/>
+<area shape="rect" title=" " alt="" coords="279,155,347,181"/>
+<area shape="rect" title=" " alt="" coords="372,155,439,181"/>
+<area shape="rect" href="writer_8h.html" title=" " alt="" coords="108,155,172,181"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -98,40 +100,13 @@ This graph shows which files directly or indirectly include this file:</div>
 </div>
 <p><a href="server_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a92b33c084b15ce1ed28bc869e16d08cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8hpp.html#a92b33c084b15ce1ed28bc869e16d08cd">Server</a> (uint16_t port, <a class="el" href="class_command.html">Command</a> &amp;cmd)</td></tr>
-<tr class="separator:a92b33c084b15ce1ed28bc869e16d08cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_session.html">Session</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_tcp_server.html">TcpServer</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a92b33c084b15ce1ed28bc869e16d08cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a92b33c084b15ce1ed28bc869e16d08cd">&#9670;&nbsp;</a></span>Server()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Server </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>port</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_command.html">Command</a> &amp;&#160;</td>
-          <td class="paramname"><em>cmd</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

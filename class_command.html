@@ -63,13 +63,24 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_command-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Command Class Reference</div>  </div>
+<div class="title">Command Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="command_8h_source.html">command.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for Command:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_command__inherit__graph.png" border="0" usemap="#a_command_inherit__map" alt="Inheritance graph"/></div>
+<map name="a_command_inherit__map" id="a_command_inherit__map">
+<area shape="rect" title=" " alt="" coords="103,5,185,32"/>
+<area shape="rect" href="class_dynamic_command.html" title=" " alt="" coords="5,80,136,107"/>
+<area shape="rect" href="class_static_command.html" title=" " alt="" coords="160,80,275,107"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -85,8 +96,13 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a28395b97e5c7bd9dc445aaf127872a35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10e83608c398fe31e59802d5b73c8498"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_command.html#a10e83608c398fe31e59802d5b73c8498">PrintString</a> (const std::string &amp;s) const</td></tr>
 <tr class="separator:a10e83608c398fe31e59802d5b73c8498"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96e0fefe59247152904e19f5b0a9c3a4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_command.html#a96e0fefe59247152904e19f5b0a9c3a4">ProcessCommand</a> (const std::string &amp;cmd)</td></tr>
-<tr class="separator:a96e0fefe59247152904e19f5b0a9c3a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87fb89ac7ce3a1a06aba92b65d58ff76"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_command.html#a87fb89ac7ce3a1a06aba92b65d58ff76">ProcessCommand</a> (const std::string &amp;cmd)=0</td></tr>
+<tr class="separator:a87fb89ac7ce3a1a06aba92b65d58ff76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a26c84f31e89ef3f7e5cbc2dc2d41d967"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_command.html#a26c84f31e89ef3f7e5cbc2dc2d41d967">count_</a></td></tr>
+<tr class="separator:a26c84f31e89ef3f7e5cbc2dc2d41d967"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Process command </p>
@@ -205,8 +221,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a96e0fefe59247152904e19f5b0a9c3a4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a96e0fefe59247152904e19f5b0a9c3a4">&#9670;&nbsp;</a></span>ProcessCommand()</h2>
+<a id="a87fb89ac7ce3a1a06aba92b65d58ff76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87fb89ac7ce3a1a06aba92b65d58ff76">&#9670;&nbsp;</a></span>ProcessCommand()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -215,7 +231,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool Command::ProcessCommand </td>
+          <td class="memname">virtual bool Command::ProcessCommand </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>cmd</em></td><td>)</td>
@@ -224,10 +240,12 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="class_dynamic_command.html#a2b64c2a3d0b1cc6f7b39a9b247c047dc">DynamicCommand</a>, and <a class="el" href="class_static_command.html#a04712e91e37cf981f6e2fec20158c35a">StaticCommand</a>.</p>
 
 </div>
 </div>
@@ -247,6 +265,29 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Add command int the block </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a26c84f31e89ef3f7e5cbc2dc2d41d967"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26c84f31e89ef3f7e5cbc2dc2d41d967">&#9670;&nbsp;</a></span>count_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const size_t Command::count_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
