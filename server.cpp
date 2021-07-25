@@ -86,8 +86,8 @@ void ReadThread(std::string s, Command* cmd_ptr, StaticCommand& static_cmd, Dyna
 Session::Session(boost::asio::ip::tcp::socket socket, std::mutex& mutex, StaticCommand& static_cmd) :
     socket_(std::move(socket)), 
     static_cmd_{static_cmd},
-    mutex_{mutex},
-    data_{}
+    data_{},
+    mutex_{ mutex }
 {
 }
 
