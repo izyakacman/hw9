@@ -73,52 +73,49 @@ $(function() {
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="command_8h.html">command.h</a>&quot;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">//void Server(uint16_t port, Command&amp; cmd );</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="class_session.html">   11</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_session.html">Session</a> : <span class="keyword">public</span> std::enable_shared_from_this&lt;Session&gt;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="class_session.html">    9</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_session.html">Session</a> : <span class="keyword">public</span> std::enable_shared_from_this&lt;Session&gt;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <a class="code" href="class_session.html#a8de6384ee11083c9c573a5447cea3539">Session</a>(boost::asio::ip::tcp::socket socket, std::mutex&amp; mutex, <a class="code" href="class_static_command.html">StaticCommand</a>&amp; static_cmd);</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <a class="code" href="class_session.html#a8de6384ee11083c9c573a5447cea3539">Session</a>(boost::asio::ip::tcp::socket socket, std::mutex&amp; mutex, <a class="code" href="class_static_command.html">StaticCommand</a>&amp; static_cmd);</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_session.html#a68020021e9d13c85b641d853646e8b7a">Start</a>();</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_session.html#a68020021e9d13c85b641d853646e8b7a">Start</a>();</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordtype">void</span> Read();</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordtype">void</span> Read();</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    boost::asio::ip::tcp::socket socket_;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">enum</span> { max_length = 1024 };</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">char</span> data_[max_length];</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <a class="code" href="class_static_command.html">StaticCommand</a>&amp; static_cmd_;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="class_dynamic_command.html">DynamicCommand</a> dynamic_cmd_;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <a class="code" href="class_command.html">Command</a>* currnet_cmd_ = &amp;static_cmd_;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">bool</span> static_ = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    std::mutex&amp; mutex_;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;};</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="class_tcp_server.html">   33</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_tcp_server.html">TcpServer</a></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;{</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="class_tcp_server.html#aa474d9f878c377077ebcd5795fd008c7">TcpServer</a>(boost::asio::io_context&amp; io_context, <span class="keywordtype">short</span> port, <a class="code" href="class_static_command.html">StaticCommand</a>&amp; static_cmd);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">void</span> Accept();</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    boost::asio::ip::tcp::acceptor acceptor_;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <a class="code" href="class_static_command.html">StaticCommand</a>&amp; static_cmd_;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    std::mutex mutex_;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;};</div>
-<div class="ttc" id="aclass_command_html"><div class="ttname"><a href="class_command.html">Command</a></div><div class="ttdef"><b>Definition:</b> command.h:39</div></div>
-<div class="ttc" id="aclass_dynamic_command_html"><div class="ttname"><a href="class_dynamic_command.html">DynamicCommand</a></div><div class="ttdef"><b>Definition:</b> command.h:99</div></div>
-<div class="ttc" id="aclass_session_html"><div class="ttname"><a href="class_session.html">Session</a></div><div class="ttdef"><b>Definition:</b> server.hpp:12</div></div>
-<div class="ttc" id="aclass_session_html_a68020021e9d13c85b641d853646e8b7a"><div class="ttname"><a href="class_session.html#a68020021e9d13c85b641d853646e8b7a">Session::Start</a></div><div class="ttdeci">void Start()</div><div class="ttdef"><b>Definition:</b> server.cpp:94</div></div>
-<div class="ttc" id="aclass_session_html_a8de6384ee11083c9c573a5447cea3539"><div class="ttname"><a href="class_session.html#a8de6384ee11083c9c573a5447cea3539">Session::Session</a></div><div class="ttdeci">Session(boost::asio::ip::tcp::socket socket, std::mutex &amp;mutex, StaticCommand &amp;static_cmd)</div><div class="ttdef"><b>Definition:</b> server.cpp:86</div></div>
-<div class="ttc" id="aclass_static_command_html"><div class="ttname"><a href="class_static_command.html">StaticCommand</a></div><div class="ttdef"><b>Definition:</b> command.h:87</div></div>
-<div class="ttc" id="aclass_tcp_server_html"><div class="ttname"><a href="class_tcp_server.html">TcpServer</a></div><div class="ttdef"><b>Definition:</b> server.hpp:34</div></div>
-<div class="ttc" id="aclass_tcp_server_html_aa474d9f878c377077ebcd5795fd008c7"><div class="ttname"><a href="class_tcp_server.html#aa474d9f878c377077ebcd5795fd008c7">TcpServer::TcpServer</a></div><div class="ttdeci">TcpServer(boost::asio::io_context &amp;io_context, short port, StaticCommand &amp;static_cmd)</div><div class="ttdef"><b>Definition:</b> server.cpp:121</div></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    boost::asio::ip::tcp::socket socket_;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">enum</span> { max_length = 1024 };</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordtype">char</span> data_[max_length];</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <a class="code" href="class_static_command.html">StaticCommand</a>&amp; static_cmd_;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="class_dynamic_command.html">DynamicCommand</a> dynamic_cmd_;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <a class="code" href="class_i_command.html">ICommand</a>* current_cmd_ = &amp;static_cmd_;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    std::mutex&amp; mutex_;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;};</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="class_tcp_server.html">   30</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_tcp_server.html">TcpServer</a></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;{</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="class_tcp_server.html#aa474d9f878c377077ebcd5795fd008c7">TcpServer</a>(boost::asio::io_context&amp; io_context, <span class="keywordtype">short</span> port, <a class="code" href="class_static_command.html">StaticCommand</a>&amp; static_cmd);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">void</span> Accept();</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    boost::asio::ip::tcp::acceptor acceptor_;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="class_static_command.html">StaticCommand</a>&amp; static_cmd_;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    std::mutex mutex_;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;};</div>
+<div class="ttc" id="aclass_dynamic_command_html"><div class="ttname"><a href="class_dynamic_command.html">DynamicCommand</a></div><div class="ttdef"><b>Definition:</b> command.h:66</div></div>
+<div class="ttc" id="aclass_i_command_html"><div class="ttname"><a href="class_i_command.html">ICommand</a></div><div class="ttdef"><b>Definition:</b> command.h:20</div></div>
+<div class="ttc" id="aclass_session_html"><div class="ttname"><a href="class_session.html">Session</a></div><div class="ttdef"><b>Definition:</b> server.hpp:10</div></div>
+<div class="ttc" id="aclass_session_html_a68020021e9d13c85b641d853646e8b7a"><div class="ttname"><a href="class_session.html#a68020021e9d13c85b641d853646e8b7a">Session::Start</a></div><div class="ttdeci">void Start()</div><div class="ttdef"><b>Definition:</b> server.cpp:42</div></div>
+<div class="ttc" id="aclass_session_html_a8de6384ee11083c9c573a5447cea3539"><div class="ttname"><a href="class_session.html#a8de6384ee11083c9c573a5447cea3539">Session::Session</a></div><div class="ttdeci">Session(boost::asio::ip::tcp::socket socket, std::mutex &amp;mutex, StaticCommand &amp;static_cmd)</div><div class="ttdef"><b>Definition:</b> server.cpp:34</div></div>
+<div class="ttc" id="aclass_static_command_html"><div class="ttname"><a href="class_static_command.html">StaticCommand</a></div><div class="ttdef"><b>Definition:</b> command.h:54</div></div>
+<div class="ttc" id="aclass_tcp_server_html"><div class="ttname"><a href="class_tcp_server.html">TcpServer</a></div><div class="ttdef"><b>Definition:</b> server.hpp:31</div></div>
+<div class="ttc" id="aclass_tcp_server_html_aa474d9f878c377077ebcd5795fd008c7"><div class="ttname"><a href="class_tcp_server.html#aa474d9f878c377077ebcd5795fd008c7">TcpServer::TcpServer</a></div><div class="ttdeci">TcpServer(boost::asio::io_context &amp;io_context, short port, StaticCommand &amp;static_cmd)</div><div class="ttdef"><b>Definition:</b> server.cpp:67</div></div>
 <div class="ttc" id="acommand_8h_html"><div class="ttname"><a href="command_8h.html">command.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

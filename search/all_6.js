@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['getpoolsize_22',['GetPoolSize',['../class_command.html#aaecb96a70a928f14d1fc1203912489c3',1,'Command']]]
+  ['getpoolsize_20',['GetPoolSize',['../class_i_command.html#a45f484a574278bc7495fdc2486dc9f92',1,'ICommand']]]
 ];
