@@ -29,6 +29,4 @@ int main(int argc, char* argv[])
 	{
 		std::cerr << "Exception: " << ex.what() << "\n";
 	}
-
-	//Server( static_cast<uint16_t>(stoi(argc[1])), cmd );
 }

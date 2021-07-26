@@ -11,36 +11,17 @@
 class Command;
 constexpr auto EndOfFileString = "eof";
 
-class ICommandHandler;
-using ICommandHandlerPtr = std::unique_ptr<ICommandHandler>;
 using IWriterPtr = std::unique_ptr<IWriter>;
 
 /**
-*	Command handler interface
+*	Command interface
 */
-class ICommandHandler {
-public:
-
-	ICommandHandler() = delete;
-	explicit ICommandHandler(size_t count) : count_{ count } {}
-	virtual ~ICommandHandler() = default;
-
-    virtual ICommandHandlerPtr ProcessCommand(Command*, const std::string&, bool& exit) = 0;
-
-protected:
-
-	const size_t count_;
-};
-
-/**
-*	Process command
-*/
-class Command
+class ICommand
 {
 public:
 
-	explicit Command(size_t count);
-	~Command() = default;
+	explicit ICommand(size_t count);
+	virtual ~ICommand() = default;
 
 	void PushPool(const std::string& s);
 
@@ -54,20 +35,7 @@ public:
 	void PrintString(const std::string& s) const;
 
 	virtual bool ProcessCommand(const std::string& cmd) = 0;
-	/*
-	{
-		bool res;
 
-		ICommandHandlerPtr ptr = handler_->ProcessCommand(this, cmd, res);
-
-		if (ptr)
-		{
-			handler_ = std::move(ptr);
-		}
-
-		return !res;
-	}
-*/
 protected:
 
 	const size_t count_;
@@ -75,7 +43,6 @@ protected:
 private:
 	
 	long long firstCmdTime_ = 0;
-	ICommandHandlerPtr handler_;
 	std::vector<std::string> pool_;
 	std::vector<IWriterPtr> writersPool_;
 };
@@ -83,57 +50,25 @@ private:
 /**
 *	Static command
 */
-class StaticCommand : public Command
+class StaticCommand : public ICommand
 {
 public:
 
-	explicit StaticCommand(size_t count) : Command(count) {}
+	explicit StaticCommand(size_t count) : ICommand(count) {}
 
 	bool ProcessCommand(const std::string& cmd) override;
 };
 
 /**
-*	DynamicCommand command
+*	Dynamic command
 */
-class DynamicCommand : public Command
+class DynamicCommand : public ICommand
 {
 public:
 
-	DynamicCommand() : Command(0) {}
+	DynamicCommand() : ICommand(0) {}
 
 	bool ProcessCommand(const std::string& cmd) override;
-
-private:
-
-	size_t openBraceCount_ = 0;
-};
-
-/**
-*	Process command int the static mode
-*/
-class StaticCommandHandler : public ICommandHandler
-{
-public:
-
-	StaticCommandHandler() = delete;
-	StaticCommandHandler(size_t count) : ICommandHandler(count) {}
-	~StaticCommandHandler() = default;
-
-	ICommandHandlerPtr ProcessCommand(Command* cmd, const std::string& s, bool& exit) override;
-};
-
-/**
-*	Process command int the dynamic mode
-*/
-class DynamicCommandHandler : public ICommandHandler
-{
-public:
-
-	DynamicCommandHandler() = delete;
-	DynamicCommandHandler(size_t count) : ICommandHandler(count) {}
-	~DynamicCommandHandler() = default;
-
-	ICommandHandlerPtr ProcessCommand(Command* cmd, const std::string& s, bool& exit) override;
 
 private:
 

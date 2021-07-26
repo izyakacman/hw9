@@ -6,8 +6,6 @@
 
 #include "command.h"
 
-//void Server(uint16_t port, Command& cmd );
-
 class Session : public std::enable_shared_from_this<Session>
 {
 public:
@@ -25,8 +23,7 @@ private:
     char data_[max_length];
     StaticCommand& static_cmd_;
     DynamicCommand dynamic_cmd_;
-    Command* currnet_cmd_ = &static_cmd_;
-    bool static_ = true;
+    ICommand* current_cmd_ = &static_cmd_;
     std::mutex& mutex_;
 };
 

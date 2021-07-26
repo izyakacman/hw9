@@ -65,77 +65,8 @@ bool DynamicCommand::ProcessCommand(const std::string& cmd)
 	return false;
 }
 
-/**
-*	Process command int the static mode
-*/
-ICommandHandlerPtr StaticCommandHandler::ProcessCommand(Command* cmd, const std::string& s, bool& exit)
+ICommand::ICommand(size_t count) : count_{ count }
 {
-	exit = true;
-
-	if (s != EndOfFileString)
-	{
-		exit = false;
-
-		if (s == "{")
-		{
-			cmd->PrintPool();
-			return ICommandHandlerPtr{ new DynamicCommandHandler(count_) };
-		}
-
-		cmd->PushPool(s);
-
-		if (cmd->GetPoolSize() == count_)
-		{
-			cmd->PrintPool();
-		}
-	}
-	else
-	{
-		cmd->PrintPool();
-	}
-
-	return nullptr;
-}
-
-/**
-*	Process command int the dynamic mode
-*/
-ICommandHandlerPtr DynamicCommandHandler::ProcessCommand(Command* cmd, const std::string& s, bool& exit)
-{
-	exit = true;
-
-	if(s == EndOfFileString)
-		return nullptr;
-
-	exit = false;
-
-	if (s == "{")
-	{
-		++openBraceCount_;
-	}
-	else
-	if (s == "}")
-	{
-		if (openBraceCount_ == 0)
-		{
-			cmd->PrintPool();
-			return ICommandHandlerPtr{ new StaticCommandHandler(count_) };
-		}
-
-		--openBraceCount_;
-	}
-	else
-	{
-		cmd->PushPool(s);
-	}
-
-	return nullptr;
-}
-
-Command::Command(size_t count) : count_{ count }
-{
-	handler_ = ICommandHandlerPtr{ new StaticCommandHandler(count_) };
-
 	writersPool_.push_back(IWriterPtr{ new CoutWriter });
 	writersPool_.push_back(IWriterPtr{ new FileWriter });
 }
@@ -143,7 +74,7 @@ Command::Command(size_t count) : count_{ count }
 /**
 *	Add command int the block
 */
-void Command::PushPool(const std::string& s)
+void ICommand::PushPool(const std::string& s)
 {
 	if (pool_.size() == 0)
 	{
@@ -156,7 +87,7 @@ void Command::PushPool(const std::string& s)
 /**
 *	Output string
 */
-void Command::PrintString(const std::string& s) const
+void ICommand::PrintString(const std::string& s) const
 {
 	for (auto& writerPtr : writersPool_)
 	{
@@ -168,7 +99,7 @@ void Command::PrintString(const std::string& s) const
 /**
 *	Output block of commands
 */
-void Command::PrintPool()
+void ICommand::PrintPool()
 {
 	CoutWriter coutWriter;
 

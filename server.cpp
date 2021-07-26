@@ -7,77 +7,25 @@
 #include <boost/asio.hpp>
 
 namespace ba = boost::asio;
-/*
-void client_session(ba::ip::tcp::socket sock, Command& cmd, std::mutex& mutex)
-{
-    std::cout << "client!!!\n";
 
-    while (true)
-    {
-        try
-        {
-            char data[1024];
-            size_t len = sock.read_some(ba::buffer(data));
-            std::string s{ data, len };
-            //std::cout << "receive " << len << "=" << s << std::endl;
-            //ba::write(sock, ba::buffer("pong", 4));
-            std::istringstream iss{s};
-
-            while (iss >> s)
-            {
-                std::lock_guard<std::mutex> lock(mutex);
-                cmd.ProcessCommand(s);
-            }
-        }
-        catch (const std::exception& e)
-        {
-            //std::cerr << "client_session exception! " << e.what() << std::endl;
-            cmd.ProcessCommand(EndOfFileString);
-            break;
-        }
-    }
-}
-
-void Server(uint16_t port, Command& cmd)
-{
-    ba::io_context io_context;
-    ba::ip::tcp::endpoint ep( ba::ip::tcp::v4(), port );
-    //std::cout << "ip " << ep.address() << std::endl;
-    ba::ip::tcp::acceptor acc(io_context, ep);
-    std::mutex mutex;
-
-    while (true) 
-    {
-        auto sock = ba::ip::tcp::socket(io_context);
-        acc.accept(sock);
-        std::thread(client_session, std::move(sock), std::ref(cmd), std::ref(mutex)).detach();
-    }
-}
-*/
-
-/// //////////////////////////////////////////////////////////////////////////////////
-
-
-void ReadThread(std::string s, Command* cmd_ptr, StaticCommand& static_cmd, DynamicCommand& dynamic_cmd, std::mutex& mutex)
+void ReadThread(std::string s, ICommand** cmd_ptr, StaticCommand& static_cmd, DynamicCommand& dynamic_cmd, std::mutex& mutex)
 {
     std::istringstream iss{ s };
 
     while (iss >> s)
     {
         std::lock_guard<std::mutex> lock(mutex);
-        bool res = cmd_ptr->ProcessCommand(s);
+        bool res = (*cmd_ptr)->ProcessCommand(s);
 
         if (res)
         {
-            if (cmd_ptr == &static_cmd)
+            if (*cmd_ptr == &static_cmd)
             {
-                std::cout << "dinamic cmd\n";
-                cmd_ptr = &dynamic_cmd;
+                *cmd_ptr = &dynamic_cmd;
             }
             else
             {
-                std::cout << "static cmd\n";
-                cmd_ptr = &static_cmd;
+                *cmd_ptr = &static_cmd;
             }
         }
     }
@@ -105,11 +53,9 @@ void Session::Read()
         {
             if (!ec)
             {
-                //std::cout << "receive " << length << "=" << std::string{ data_, length } << std::endl;
-
                 std::string s{ data_, length };
 
-                std::thread(ReadThread, std::move(s), currnet_cmd_, std::ref(static_cmd_), std::ref(dynamic_cmd_), std::ref(mutex_)).detach();
+                std::thread(ReadThread, std::move(s), &current_cmd_, std::ref(static_cmd_), std::ref(dynamic_cmd_), std::ref(mutex_)).detach();
 
                 Read();
             }
