@@ -2,11 +2,11 @@
 <area shape="rect" id="node1" title=" " alt="" coords="105,5,188,32"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,80,69,107"/>
 <area shape="rect" id="node3" title=" " alt="" coords="93,80,200,107"/>
-<area shape="rect" id="node4" href="$command_8h.html" title=" " alt="" coords="225,80,314,107"/>
-<area shape="rect" id="node5" title=" " alt="" coords="69,229,141,256"/>
-<area shape="rect" id="node6" title=" " alt="" coords="307,229,362,256"/>
-<area shape="rect" id="node7" title=" " alt="" coords="196,155,255,181"/>
-<area shape="rect" id="node8" title=" " alt="" coords="279,155,347,181"/>
-<area shape="rect" id="node9" title=" " alt="" coords="372,155,439,181"/>
-<area shape="rect" id="node10" href="$writer_8h.html" title=" " alt="" coords="108,155,172,181"/>
+<area shape="rect" id="node4" href="$commands__processor_8hpp.html" title=" " alt="" coords="225,80,399,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="112,229,184,256"/>
+<area shape="rect" id="node6" title=" " alt="" coords="350,229,405,256"/>
+<area shape="rect" id="node7" title=" " alt="" coords="239,155,297,181"/>
+<area shape="rect" id="node8" title=" " alt="" coords="322,155,390,181"/>
+<area shape="rect" id="node9" title=" " alt="" coords="415,155,481,181"/>
+<area shape="rect" id="node10" href="$writer_8h.html" title=" " alt="" coords="151,155,215,181"/>
 </map>
