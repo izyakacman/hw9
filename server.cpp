@@ -8,7 +8,10 @@
 
 namespace ba = boost::asio;
 
-void ReadThread(std::string s, ICommand** cmd_ptr, StaticCommand& static_cmd, DynamicCommand& dynamic_cmd, std::mutex& mutex)
+namespace{
+
+void ReadThread(std::string s, ICommandsProcessor** cmd_ptr, StaticCommandsProcessor& static_cmd_processor, 
+    DynamicCommandsProcessor& dynamic_cmd_processor, std::mutex& mutex)
 {
     std::istringstream iss{ s };
 
@@ -19,22 +22,24 @@ void ReadThread(std::string s, ICommand** cmd_ptr, StaticCommand& static_cmd, Dy
 
         if (res)
         {
-            if (*cmd_ptr == &static_cmd)
+            if (*cmd_ptr == &static_cmd_processor)
             {
-                *cmd_ptr = &dynamic_cmd;
+                *cmd_ptr = &dynamic_cmd_processor;
             }
             else
             {
-                *cmd_ptr = &static_cmd;
+                *cmd_ptr = &static_cmd_processor;
             }
         }
     }
 }
 
-Session::Session(boost::asio::ip::tcp::socket socket, std::mutex& mutex, StaticCommand& static_cmd) :
+} // namespace
+
+Session::Session(boost::asio::ip::tcp::socket socket, std::mutex& mutex, StaticCommandsProcessor& static_cmd_processor) :
     socket_(std::move(socket)), 
     data_{},
-    static_cmd_{ static_cmd },
+    static_cmd_processor_{ static_cmd_processor },
     mutex_{ mutex }
 {
 }
@@ -55,18 +60,19 @@ void Session::Read()
             {
                 std::string s{ data_, length };
 
-                std::thread(ReadThread, std::move(s), &current_cmd_, std::ref(static_cmd_), std::ref(dynamic_cmd_), std::ref(mutex_)).detach();
+                std::thread(ReadThread, std::move(s), &current_cmd_processor_, std::ref(static_cmd_processor_),
+                    std::ref(dynamic_cmd_processor_), std::ref(mutex_)).detach();
 
                 Read();
             }
             else
-                static_cmd_.ProcessCommand(EndOfFileString);
+                static_cmd_processor_.ProcessCommand(EndOfFileString);
         });
 }
 
-TcpServer::TcpServer(boost::asio::io_context& io_context, short port, StaticCommand& static_cmd) :
+TcpServer::TcpServer(boost::asio::io_context& io_context, short port, StaticCommandsProcessor& static_cmd_processor) :
     acceptor_(io_context, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)), 
-    static_cmd_{ static_cmd }
+    static_cmd_processor_{ static_cmd_processor }
 {
     Accept();
 }
@@ -78,7 +84,7 @@ void TcpServer::Accept()
         {
             if (!ec)
             {
-                std::make_shared<Session>(std::move(socket), mutex_, static_cmd_)->Start();
+                std::make_shared<Session>(std::move(socket), mutex_, static_cmd_processor_)->Start();
             }
 
             Accept();

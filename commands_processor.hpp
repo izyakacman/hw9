@@ -8,20 +8,20 @@
 
 #include "writer.h"
 
-class Command;
+class ICommandsProcessor;
 constexpr auto EndOfFileString = "eof";
 
 using IWriterPtr = std::unique_ptr<IWriter>;
 
 /**
-*	Command interface
+*	ICommandsProcessor interface
 */
-class ICommand
+class ICommandsProcessor
 {
 public:
 
-	explicit ICommand(size_t count);
-	virtual ~ICommand() = default;
+	explicit ICommandsProcessor(size_t count);
+	virtual ~ICommandsProcessor() = default;
 
 	void PushPool(const std::string& s);
 
@@ -48,13 +48,13 @@ private:
 };
 
 /**
-*	Static command
+*	Static commands processor
 */
-class StaticCommand : public ICommand
+class StaticCommandsProcessor : public ICommandsProcessor
 {
 public:
 
-	explicit StaticCommand(size_t count) : ICommand(count) {}
+	explicit StaticCommandsProcessor(size_t count) : ICommandsProcessor(count) {}
 
 	bool ProcessCommand(const std::string& cmd) override;
 };
@@ -62,11 +62,11 @@ public:
 /**
 *	Dynamic command
 */
-class DynamicCommand : public ICommand
+class DynamicCommandsProcessor : public ICommandsProcessor
 {
 public:
 
-	DynamicCommand() : ICommand(0) {}
+	DynamicCommandsProcessor() : ICommandsProcessor(0) {}
 
 	bool ProcessCommand(const std::string& cmd) override;
 

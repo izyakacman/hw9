@@ -17,7 +17,7 @@ find_package(Boost COMPONENTS system  REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
 
 # Добавьте источник в исполняемый файл этого проекта.
-add_executable (bulk_server "main.cpp" "server.cpp" "command.cpp" )
+add_executable (bulk_server "main.cpp" "server.cpp" "commands_processor.cpp" )
 
 target_link_libraries(bulk_server
         ${Boost_LIBRARIES}

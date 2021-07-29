@@ -1,4 +1,4 @@
-﻿#include "command.h"
+﻿#include "commands_processor.hpp"
 
 #include <chrono>
 
@@ -7,7 +7,7 @@
 *	@return true - change type of command
 * 
 */
-bool StaticCommand::ProcessCommand(const std::string& cmd)
+bool StaticCommandsProcessor::ProcessCommand(const std::string& cmd)
 {
 	if (cmd != EndOfFileString)
 	{
@@ -37,7 +37,7 @@ bool StaticCommand::ProcessCommand(const std::string& cmd)
 *	@return true - change type of command
 *
 */
-bool DynamicCommand::ProcessCommand(const std::string& cmd)
+bool DynamicCommandsProcessor::ProcessCommand(const std::string& cmd)
 {
 	if (cmd == EndOfFileString)
 		return false;
@@ -65,7 +65,7 @@ bool DynamicCommand::ProcessCommand(const std::string& cmd)
 	return false;
 }
 
-ICommand::ICommand(size_t count) : count_{ count }
+ICommandsProcessor::ICommandsProcessor(size_t count) : count_{ count }
 {
 	writersPool_.push_back(IWriterPtr{ new CoutWriter });
 	writersPool_.push_back(IWriterPtr{ new FileWriter });
@@ -74,7 +74,7 @@ ICommand::ICommand(size_t count) : count_{ count }
 /**
 *	Add command int the block
 */
-void ICommand::PushPool(const std::string& s)
+void ICommandsProcessor::PushPool(const std::string& s)
 {
 	if (pool_.size() == 0)
 	{
@@ -87,7 +87,7 @@ void ICommand::PushPool(const std::string& s)
 /**
 *	Output string
 */
-void ICommand::PrintString(const std::string& s) const
+void ICommandsProcessor::PrintString(const std::string& s) const
 {
 	for (auto& writerPtr : writersPool_)
 	{
@@ -99,7 +99,7 @@ void ICommand::PrintString(const std::string& s) const
 /**
 *	Output block of commands
 */
-void ICommand::PrintPool()
+void ICommandsProcessor::PrintPool()
 {
 	CoutWriter coutWriter;
 

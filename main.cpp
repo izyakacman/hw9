@@ -2,7 +2,7 @@
 #include <string>
 
 #include "server.hpp"
-#include "command.h"
+#include "commands_processor.hpp"
 
 using namespace std;
 
@@ -16,11 +16,11 @@ int main(int argc, char* argv[])
 
 	try
 	{
-		StaticCommand static_cmd{ static_cast<size_t>(atoll(argv[2])) };
+		StaticCommandsProcessor static_cmd_processor{ static_cast<size_t>(atoll(argv[2])) };
 
 		boost::asio::io_context io_context;
 
-		TcpServer server(io_context, static_cast<uint16_t>(stoi(argv[1])), static_cmd);
+		TcpServer server(io_context, static_cast<uint16_t>(stoi(argv[1])), static_cmd_processor);
 
 		io_context.run();
 
