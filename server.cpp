@@ -11,7 +11,7 @@ namespace ba = boost::asio;
 Session::Session(boost::asio::ip::tcp::socket socket, std::mutex& mutex, StaticCommand& static_cmd) :
     socket_(std::move(socket)), 
     data_{},
-    static_cmd_{ static_cmd },
+    static_cmd_processor_{ static_cmd_processor },
     mutex_{ mutex }
 {
 }
@@ -59,7 +59,7 @@ void Session::Read()
                 Read();
             }
             else
-                static_cmd_.ProcessCommand(EndOfFileString);
+                static_cmd_processor_.ProcessCommand(EndOfFileString);
         });
 }
 
@@ -78,7 +78,7 @@ void TcpServer::Accept()
         {
             if (!ec)
             {
-                std::make_shared<Session>(std::move(socket), mutex_, static_cmd_)->Start();
+                std::make_shared<Session>(std::move(socket), mutex_, static_cmd_processor_)->Start();
             }
 
             Accept();
