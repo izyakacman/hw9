@@ -8,7 +8,7 @@
 
 namespace ba = boost::asio;
 
-Session::Session(boost::asio::ip::tcp::socket socket, std::mutex& mutex, StaticCommand& static_cmd) :
+Session::Session(boost::asio::ip::tcp::socket socket, std::mutex& mutex, StaticCommandsProcessor& static_cmd_processor) :
     socket_(std::move(socket)), 
     data_{},
     static_cmd_processor_{ static_cmd_processor },
@@ -40,18 +40,18 @@ void Session::Read()
 
                     {
                         std::lock_guard<std::mutex> lock(mutex_);
-                        res = current_cmd_->ProcessCommand(s);
+                        res = current_cmd_processor_->ProcessCommand(s);
                     }
 
                     if (res)
                     {
-                        if (current_cmd_ == &static_cmd_)
+                        if (current_cmd_processor_ == &static_cmd_processor_)
                         {
-                            current_cmd_ = &static_cmd_;
+                            current_cmd_processor_ = &dynamic_cmd_processor_;
                         }
                         else
                         {
-                            current_cmd_ = &static_cmd_;
+                            current_cmd_processor_ = &static_cmd_processor_;
                         }
                     }
                 }
@@ -63,9 +63,9 @@ void Session::Read()
         });
 }
 
-TcpServer::TcpServer(boost::asio::io_context& io_context, short port, StaticCommand& static_cmd, std::mutex& mutex) :
+TcpServer::TcpServer(boost::asio::io_context& io_context, short port, StaticCommandsProcessor& static_cmd_processor, std::mutex& mutex) :
     acceptor_(io_context, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)), 
-    static_cmd_{ static_cmd },
+    static_cmd_processor_{ static_cmd_processor },
     mutex_{ mutex }
 {
     Accept();

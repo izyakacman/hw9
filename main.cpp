@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
 		boost::asio::io_context io_context;
         std::mutex mutex;
 
-		TcpServer server(io_context, static_cast<uint16_t>(stoi(argv[1])), static_cmd, mutex);
+		TcpServer server(io_context, static_cast<uint16_t>(stoi(argv[1])), static_cmd_processor, mutex);
 
         // Capture SIGINT and SIGTERM to perform a clean shutdown
         boost::asio::signal_set signals(io_context, SIGINT, SIGTERM);
