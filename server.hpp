@@ -31,7 +31,7 @@ class TcpServer
 {
 public:
 
-    TcpServer(boost::asio::io_context& io_context, short port, StaticCommand& static_cmd);
+    TcpServer(boost::asio::io_context& io_context, short port, StaticCommand& static_cmd, std::mutex& mutex);
 
 private:
 
@@ -39,5 +39,5 @@ private:
 
     boost::asio::ip::tcp::acceptor acceptor_;
     StaticCommand& static_cmd_;
-    std::mutex mutex_;
+    std::mutex& mutex_;
 };

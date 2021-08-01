@@ -8,29 +8,6 @@
 
 namespace ba = boost::asio;
 
-void ReadThread(std::string s, ICommand** cmd_ptr, StaticCommand& static_cmd, DynamicCommand& dynamic_cmd, std::mutex& mutex)
-{
-    std::istringstream iss{ s };
-
-    while (iss >> s)
-    {
-        std::lock_guard<std::mutex> lock(mutex);
-        bool res = (*cmd_ptr)->ProcessCommand(s);
-
-        if (res)
-        {
-            if (*cmd_ptr == &static_cmd)
-            {
-                *cmd_ptr = &dynamic_cmd;
-            }
-            else
-            {
-                *cmd_ptr = &static_cmd;
-            }
-        }
-    }
-}
-
 Session::Session(boost::asio::ip::tcp::socket socket, std::mutex& mutex, StaticCommand& static_cmd) :
     socket_(std::move(socket)), 
     data_{},
@@ -55,7 +32,29 @@ void Session::Read()
             {
                 std::string s{ data_, length };
 
-                std::thread(ReadThread, std::move(s), &current_cmd_, std::ref(static_cmd_), std::ref(dynamic_cmd_), std::ref(mutex_)).detach();
+                std::istringstream iss{ s };
+
+                while (iss >> s)
+                {
+                    bool res;
+
+                    {
+                        std::lock_guard<std::mutex> lock(mutex_);
+                        res = current_cmd_->ProcessCommand(s);
+                    }
+
+                    if (res)
+                    {
+                        if (current_cmd_ == &static_cmd_)
+                        {
+                            current_cmd_ = &static_cmd_;
+                        }
+                        else
+                        {
+                            current_cmd_ = &static_cmd_;
+                        }
+                    }
+                }
 
                 Read();
             }
@@ -64,9 +63,10 @@ void Session::Read()
         });
 }
 
-TcpServer::TcpServer(boost::asio::io_context& io_context, short port, StaticCommand& static_cmd) :
+TcpServer::TcpServer(boost::asio::io_context& io_context, short port, StaticCommand& static_cmd, std::mutex& mutex) :
     acceptor_(io_context, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)), 
-    static_cmd_{ static_cmd }
+    static_cmd_{ static_cmd },
+    mutex_{ mutex }
 {
     Accept();
 }
