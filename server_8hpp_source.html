@@ -98,7 +98,7 @@ $(function() {
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;{</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="class_tcp_server.html#acbf19ed5ed9c060ec72538a963e7ac0f">TcpServer</a>(boost::asio::io_context&amp; io_context, <span class="keywordtype">short</span> port, <a class="code" href="class_static_commands_processor.html">StaticCommandsProcessor</a>&amp; static_cmd);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="class_tcp_server.html#a41fb2c9b67a9ba4f07ac8cc72e9f7e5a">TcpServer</a>(boost::asio::io_context&amp; io_context, <span class="keywordtype">short</span> port, <a class="code" href="class_static_commands_processor.html">StaticCommandsProcessor</a>&amp; static_cmd_processor, std::mutex&amp; mutex);</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
@@ -106,16 +106,16 @@ $(function() {
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    boost::asio::ip::tcp::acceptor acceptor_;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="class_static_commands_processor.html">StaticCommandsProcessor</a>&amp; static_cmd_processor_;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    std::mutex mutex_;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    std::mutex&amp; mutex_;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;};</div>
 <div class="ttc" id="aclass_dynamic_commands_processor_html"><div class="ttname"><a href="class_dynamic_commands_processor.html">DynamicCommandsProcessor</a></div><div class="ttdef"><b>Definition:</b> commands_processor.hpp:66</div></div>
 <div class="ttc" id="aclass_i_commands_processor_html"><div class="ttname"><a href="class_i_commands_processor.html">ICommandsProcessor</a></div><div class="ttdef"><b>Definition:</b> commands_processor.hpp:20</div></div>
 <div class="ttc" id="aclass_session_html"><div class="ttname"><a href="class_session.html">Session</a></div><div class="ttdef"><b>Definition:</b> server.hpp:10</div></div>
-<div class="ttc" id="aclass_session_html_a68020021e9d13c85b641d853646e8b7a"><div class="ttname"><a href="class_session.html#a68020021e9d13c85b641d853646e8b7a">Session::Start</a></div><div class="ttdeci">void Start()</div><div class="ttdef"><b>Definition:</b> server.cpp:47</div></div>
-<div class="ttc" id="aclass_session_html_aee85ea34ed422a6d975ff846cbe82207"><div class="ttname"><a href="class_session.html#aee85ea34ed422a6d975ff846cbe82207">Session::Session</a></div><div class="ttdeci">Session(boost::asio::ip::tcp::socket socket, std::mutex &amp;mutex, StaticCommandsProcessor &amp;static_cmd_processor)</div><div class="ttdef"><b>Definition:</b> server.cpp:39</div></div>
+<div class="ttc" id="aclass_session_html_a68020021e9d13c85b641d853646e8b7a"><div class="ttname"><a href="class_session.html#a68020021e9d13c85b641d853646e8b7a">Session::Start</a></div><div class="ttdeci">void Start()</div><div class="ttdef"><b>Definition:</b> server.cpp:19</div></div>
+<div class="ttc" id="aclass_session_html_aee85ea34ed422a6d975ff846cbe82207"><div class="ttname"><a href="class_session.html#aee85ea34ed422a6d975ff846cbe82207">Session::Session</a></div><div class="ttdeci">Session(boost::asio::ip::tcp::socket socket, std::mutex &amp;mutex, StaticCommandsProcessor &amp;static_cmd_processor)</div><div class="ttdef"><b>Definition:</b> server.cpp:11</div></div>
 <div class="ttc" id="aclass_static_commands_processor_html"><div class="ttname"><a href="class_static_commands_processor.html">StaticCommandsProcessor</a></div><div class="ttdef"><b>Definition:</b> commands_processor.hpp:54</div></div>
 <div class="ttc" id="aclass_tcp_server_html"><div class="ttname"><a href="class_tcp_server.html">TcpServer</a></div><div class="ttdef"><b>Definition:</b> server.hpp:31</div></div>
-<div class="ttc" id="aclass_tcp_server_html_acbf19ed5ed9c060ec72538a963e7ac0f"><div class="ttname"><a href="class_tcp_server.html#acbf19ed5ed9c060ec72538a963e7ac0f">TcpServer::TcpServer</a></div><div class="ttdeci">TcpServer(boost::asio::io_context &amp;io_context, short port, StaticCommandsProcessor &amp;static_cmd)</div><div class="ttdef"><b>Definition:</b> server.cpp:73</div></div>
+<div class="ttc" id="aclass_tcp_server_html_a41fb2c9b67a9ba4f07ac8cc72e9f7e5a"><div class="ttname"><a href="class_tcp_server.html#a41fb2c9b67a9ba4f07ac8cc72e9f7e5a">TcpServer::TcpServer</a></div><div class="ttdeci">TcpServer(boost::asio::io_context &amp;io_context, short port, StaticCommandsProcessor &amp;static_cmd_processor, std::mutex &amp;mutex)</div><div class="ttdef"><b>Definition:</b> server.cpp:66</div></div>
 <div class="ttc" id="acommands__processor_8hpp_html"><div class="ttname"><a href="commands__processor_8hpp.html">commands_processor.hpp</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
